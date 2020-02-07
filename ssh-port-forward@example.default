@@ -1,0 +1,9 @@
+# Server to connect to (user@host)
+TARGET_USER=user
+TARGET_HOST=host.example.com
+
+# Port on target
+REMOTE_PORT=2222
+
+# Port to forward
+LOCAL_PORT=22

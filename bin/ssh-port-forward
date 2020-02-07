@@ -1,0 +1,20 @@
+#! /bin/bash
+
+if [ $# -eq 4 ]; then
+    TARGET_USER=$1 ; shift
+    TARGET_HOST=$1 ; shift
+    REMOTE_PORT=$1 ; shift
+    LOCAL_PORT=$1  ; shift
+fi
+if [ $# -ne 0 ]; then
+    echo "usage:"
+    echo " - ssh-port-forward : use variable (see ssh-port-forward@example.default)"
+    echo " - ssh-port-forward TARGET_USER TARGET_HOST REMOTE_PORT LOCAL_PORT : specify port forwarding variables"
+    exit 1
+fi
+
+# Try to get keychain ssh agent
+[ -e ${HOME}/.keychain/${HOSTNAME}-sh ] && source ${HOME}/.keychain/${HOSTNAME}-sh
+
+# SSH tunnel
+/usr/bin/ssh -NT -o ServerAliveInterval=60 -o ExitOnForwardFailure=yes -R ${TARGET_HOST}:${REMOTE_PORT}:localhost:${LOCAL_PORT} ${TARGET_USER}@${TARGET_HOST}

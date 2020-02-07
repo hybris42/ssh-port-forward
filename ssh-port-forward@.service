@@ -1,0 +1,16 @@
+[Unit]
+Description=Setup a remote SSH port forwarding on %I
+After=network.target
+
+[Service]
+User=USER
+EnvironmentFile=/etc/default/ssh-port-forward@%i
+ExecStart=/usr/local/bin/ssh-port-forward
+
+# Restart every >2 seconds to avoid StartLimitInterval failure
+RestartSec=5
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
